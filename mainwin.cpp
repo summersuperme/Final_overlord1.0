@@ -9,6 +9,7 @@ MainWin::MainWin(QWidget *parent)
     ui->setupUi(this);
     ui->textEdit->setFont(font);
     first = 1;
+    curnum = 0;
 }
 
 MainWin::~MainWin()
@@ -49,31 +50,36 @@ void MainWin::on_open_clicked()
     }
     file.close();
     this->ui->textEdit->setText(list.at(0).gettext());
-    curnum = 0;
 }
 
 void MainWin::on_next_clicked()
 {
-    if(first){
-        {
-            if(curnum < list.size()-1)
-            {
-                curnum++;
-                this->ui->textEdit->setText(list.at(curnum).gettext());
-            }else{
-                QMessageBox::warning(this,"错误","当前是最后一题!!");
-                return;
-            }
-        }
+    if(list.empty())
+    {
+        QMessageBox::warning(this,"提示","当前没有数据！！");
+        on_open_clicked();
+        return;
+    }
+    if(curnum < list.size()-1)
+    {
+        this->ui->textEdit->setText(list.at(++curnum).gettext());
+    }else{
+        QMessageBox::warning(this,"错误","当前是最后一题!!");
+        return;
     }
 }
 
 void MainWin::on_last_clicked()
 {
+    if(list.empty())
+    {
+        QMessageBox::warning(this,"提示","当前没有数据！！");
+        on_open_clicked();
+        return;
+    }
     if(curnum > 0)
     {
-        curnum--;
-        this->ui->textEdit->setText(list.at(curnum).gettext());
+        this->ui->textEdit->setText(list.at(--curnum).gettext());
     }else{
         QMessageBox::warning(this,"错误","当前是第一题!!");
         return;
@@ -82,44 +88,56 @@ void MainWin::on_last_clicked()
 
 void MainWin::on_answer_1_clicked()
 {
-    if(list.at(curnum).getanswer() != 'A')
+    if(!list.empty())
     {
-        QMessageBox::information(this,"信息","判断错误!");
-    }else{
-        QMessageBox::information(this,"信息","回答正确!");
-        on_next_clicked();
+        if(list.at(curnum).getanswer() != 'A')
+        {
+            QMessageBox::information(this,"信息","判断错误!");
+        }else{
+            QMessageBox::information(this,"信息","回答正确!");
+            on_next_clicked();
+        }
     }
 }
 
 void MainWin::on_answer_2_clicked()
 {
-    if(list.at(curnum).getanswer() != 'B')
+    if(!list.empty())
     {
-        QMessageBox::information(this,"信息","判断错误!");
-    }else{
-        QMessageBox::information(this,"信息","回答正确!");
-        on_next_clicked();
+        if(list.at(curnum).getanswer() != 'B')
+        {
+            QMessageBox::information(this,"信息","判断错误!");
+        }else{
+            QMessageBox::information(this,"信息","回答正确!");
+            on_next_clicked();
+        }
     }
 }
 
 void MainWin::on_answer_3_clicked()
 {
-    if(list.at(curnum).getanswer() != 'C')
+    if(!list.empty())
     {
-        QMessageBox::information(this,"信息","判断错误!");
-    }else{
-        QMessageBox::information(this,"信息","回答正确!");
-        on_next_clicked();
+        if(list.at(curnum).getanswer() != 'C')
+        {
+            QMessageBox::information(this,"信息","判断错误!");
+        }else{
+            QMessageBox::information(this,"信息","回答正确!");
+            on_next_clicked();
+        }
     }
 }
 
 void MainWin::on_answer_4_clicked()
 {
-    if(list.at(curnum).getanswer() != 'D')
+    if(!list.empty())
     {
-        QMessageBox::information(this,"信息","判断错误!");
-    }else{
-        QMessageBox::information(this,"信息","回答正确!");
-        on_next_clicked();
+        if(list.at(curnum).getanswer() != 'D')
+        {
+            QMessageBox::information(this,"信息","判断错误!");
+        }else{
+            QMessageBox::information(this,"信息","回答正确!");
+            on_next_clicked();
+        }
     }
 }
